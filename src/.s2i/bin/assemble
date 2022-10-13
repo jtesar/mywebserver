@@ -8,6 +8,7 @@
 #
 
 # If the 'mywebserver' assemble script is executed with the '-h' flag, print the usage.
+
 if [[ "$1" == "-h" ]]; then
 	exec /usr/libexec/s2i/usage
 fi
@@ -28,5 +29,6 @@ cp /tmp/src/content/* /var/www/html
 
 echo "---> Building application from source..."
 cd /tmp/src
+ls -l *
 make 
 make install
