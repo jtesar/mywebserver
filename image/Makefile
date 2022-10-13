@@ -7,6 +7,7 @@ build:
 .PHONY: test
 test: build
 	podman login -u developer -p $(oc whoami -t) default-route-openshift-image-registry.apps.ocp4.example.com
-	podman push $(IMAGE_NAME) default-route-openshift-image-registry.apps.ocp4.example.com/test/$(IMAGE_NAME)
 	oc delete all --all
-	oc new-app https://github.com/jtesar/mywebserver.git --context-dir=src 
+	podman push $(IMAGE_NAME) default-route-openshift-image-registry.apps.ocp4.example.com/test/$(IMAGE_NAME) 
+	oc new-app mywebserver~https://github.com/jtesar/mywebserver.git --context-dir=src --strategy=source --name web
+	oc logs -f buildconfig/web
