@@ -25,6 +25,7 @@ if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
 
   for i in *.cc *h; do
   if ! [ "$(diff $i /tmp/src/$i 2>/dev/null)" ]; then 
+	echo $i is the same, copying from artifacts
 	mv $i /tmp/src
     fi
   done
