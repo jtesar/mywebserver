@@ -17,9 +17,22 @@ fi
 #
 if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
   echo "---> Restoring build artifacts..."
+  pushd /tmp/artifacts
+  
+  if [ "$(ls *.o 2>/dev/null)" ]; then
+	  mv *.o /tmp/src
+  fi
+
+  for i in *.cc *h; do
+    if ! [ "$(diff $i /tmp/src/$i) 2>/dev/null" ]; then 
+	mv $i /tmp/src
+    fi
+  done
+
   shopt -s dotglob
   mv /tmp/artifacts/* /tmp/src
   shopt -u dotglob
+  popd 
 fi
 
 
